@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Pink Finance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #ffd1dc 100%);
+      --pink-primary: #ff6b8b;
+      --pink-hover: #ff4770;
+      --pink-light: #fff5f7;
+      --pink-card: rgba(255, 255, 255, 0.95);
+      --pink-border: #ffccd5;
+      --pink-soft: #ff8fa3;
+      --purple-accent: #c77dff;
+      --green-income: #4ecdc4;
+      --red-expense: #ff6b6b;
+      --text-main: #5c3d46;
+      --text-muted: #9e7a85;
+      --shadow: 0 10px 25px rgba(255, 107, 139, 0.12);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 1100px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(15px);
+      border-radius: 30px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 20px 40px rgba(255, 182, 193, 0.3);
+      overflow: hidden;
+      min-height: 650px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-box {
+      max-width: 400px;
+      margin: auto;
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--pink-border);
+      text-align: center;
+    }
+
+    .auth-box h2 {
+      font-family: 'Comfortaa', cursive;
+      color: var(--pink-primary);
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+
+    .auth-box p { color: var(--text-muted); margin-bottom: 20px; font-size: 14px; }
+
+    .input-group { margin-bottom: 15px; text-align: left; }
+    .input-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 2px solid var(--pink-border);
+      background: var(--pink-light);
+      outline: none;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      border-color: var(--pink-primary);
+      background: #ffffff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: var(--pink-primary);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover { background: var(--pink-hover); }
+
+    .auth-toggle { margin-top: 15px; font-size: 13px; color: var(--text-muted); }
+    .auth-toggle span { color: var(--pink-primary); font-weight: 700; cursor: pointer; text-decoration: underline; }
+
+    .app-header {
+      background: #ffffff;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--pink-border);
+    }
+
+    .logo {
+      font-family: 'Comfortaa', cursive;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--pink-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-profile { display: flex; align-items: center; gap: 12px; }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--pink-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--pink-primary);
+      font-weight: 800;
+    }
+
+    .logout-btn {
+      background: var(--pink-light);
+      color: var(--pink-primary);
+      border: 1px solid var(--pink-border);
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .dashboard {
+      padding: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      flex: 1;
+    }
+
+    .card {
+      background: var(--pink-card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid #ffffff;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      font-family: 'Comfortaa', cursive;
+    }
+
+    .card-value.income { color: var(--green-income); }
+    .card-value.expense { color: var(--red-expense); }
+    .card-value.savings { color: var(--pink-primary); }
+
+    .main-grid {
+      grid-column: span 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .section-title {
+      font-family: 'Comfortaa', cursive;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .goal-card {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 12px;
+      border: 1px solid var(--pink-border);
+    }
+
+    .goal-info { display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: 700; font-size: 14px; }
+    .progress-bar-bg { height: 10px; background: var(--pink-light); border-radius: 10px; overflow: hidden; margin-bottom: 6px; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--pink-soft), var(--pink-primary)); width: 0%; transition: width 0.5s ease; }
+    .goal-details { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); }
+
+    .transaction-list { max-height: 300px; overflow-y: auto; }
+    .transaction-item {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 12px 15px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #f0f0f0;
+    }
+
+    .tx-icon {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    .tx-icon.income { background: rgba(78, 205, 196, 0.15); color: var(--green-income); }
+    .tx-icon.expense { background: rgba(255, 107, 107, 0.15); color: var(--red-expense); }
+
+    .tx-details { flex: 1; }
+    .tx-title { font-weight: 700; font-size: 13px; }
+    .tx-date { font-size: 10px; color: var(--text-muted); }
+    .tx-amount { font-weight: 800; font-size: 14px; }
+    .tx-amount.income { color: var(--green-income); }
+    .tx-amount.expense { color: var(--red-expense); }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(92, 61, 70, 0.4);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .modal.active { opacity: 1; pointer-events: all; }
+    .modal-content { background: #ffffff; width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; position: relative; }
+    .close-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 18px; color: var(--text-muted); cursor: pointer; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Auth Screen -->
+    <div id="authContainer" class="auth-box">
+      <div id="loginForm">
+        <h2>💖 Здравей, Красавице!</h2>
+        <p>Влез в своя розов финансов дневник</p>
+        <form onsubmit="handleLogin(event)">
+          <div class="input-group">
+            <label>Имейл / Име</label>
+            <input type="text" id="loginEmail" placeholder="yourname@gmail.com" required>
+          </div>
+          <div class="input-group">
+            <label>Парола</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn"><i class="fas fa-heart"></i> Вход</button>
+        </form>
+        <div class="auth-toggle">
+          Нямаш профил? <span onclick="toggleAuth('register')">Регистрирай се</span>
+        </div>
+      </div>
+
+      <div id="registerForm" class="hidden">
+        <h2>✨ Нов Профил</h2>
+        <p>Започни да следиш спестяванията си днес!</p>
+        <form onsubmit="handleRegister(event)">
+          <div class="input-group">
+            <label>Твоето Име</label>
+            <input type="text" id="regName" placeholder="Ани" required>
+          </div>
+          <div class="input-group">
+            <label>Имейл</label>
+            <input type="email" id="regEmail" placeholder="yourname@gmail.com" required>
+          </div>
+          <div class="input-group">
+            <label>Парола</label>
+            <input type="password" id="regPassword" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn"><i class="fas fa-sparkles"></i> Създай Профил</button>
+        </form>
+        <div class="auth-toggle">
+          Вече имаш профил? <span onclick="toggleAuth('login')">Влез оттук</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div id="appHeader" class="app-header hidden">
+      <div class="logo">
+        <i class="fas fa-piggy-bank"></i>
+        <span>Sweet Finance</span>
+      </div>
+      <div class="user-profile">
+        <div class="avatar" id="userAvatar">A</div>
+        <div>
+          <div style="font-weight: 700; font-size: 13px;" id="userName">Ани</div>
+          <div style="font-size: 10px; color: var(--text-muted);" id="userEmail">ani@example.com</div>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Изход</button>
+      </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="appDashboard" class="dashboard hidden">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-wallet" style="color: var(--pink-primary);"></i> Общ Баланс</div>
+        <div class="card-value savings" id="totalBalance">0.00 €</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-arrow-down" style="color: var(--green-income);"></i> Приходи</div>
+        <div class="card-value income" id="totalIncome">+0.00 €</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-arrow-up" style="color: var(--red-expense);"></i> Разходи</div>
+        <div class="card-value expense" id="totalExpense">-0.00 €</div>
+      </div>
+
+      <div class="main-grid">
+        <div class="card">
+          <div class="section-title">
+            <span><i class="fas fa-bullseye" style="color: var(--pink-primary);"></i> Спестовни Цели</span>
+            <button class="btn" style="width: auto; padding: 5px 10px; font-size: 11px;" onclick="openModal('goalModal')">
+              <i class="fas fa-plus"></i> Нова Цел
+            </button>
+          </div>
+          <div id="goalsList"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <span><i class="fas fa-receipt" style="color: var(--purple-accent);"></i> Транзакции</span>
+            <button class="btn" style="width: auto; padding: 5px 10px; font-size: 11px;" onclick="openModal('txModal')">
+              <i class="fas fa-plus"></i> Добави
+            </button>
+          </div>
+          <div class="transaction-list" id="txList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Goals -->
+  <div id="goalModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal('goalModal')">&times;</button>
+      <h3 style="font-family: 'Comfortaa'; color: var(--pink-primary); margin-bottom: 15px;">🎀 Нова Спестовна Цел</h3>
+      <form onsubmit="handleAddGoal(event)">
+        <div class="input-group">
+          <label>Цел (напр. Почивка 🏖️)</label>
+          <input type="text" id="goalTitle" required>
+        </div>
+        <div class="input-group">
+          <label>Целева Сума (€)</label>
+          <input type="number" id="goalTarget" step="0.01" required>
+        </div>
+        <div class="input-group">
+          <label>Налични в момента (€)</label>
+          <input type="number" id="goalCurrent" step="0.01" value="0">
+        </div>
+        <button type="submit" class="btn">Запази</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Transactions -->
+  <div id="txModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal('txModal')">&times;</button>
+      <h3 style="font-family: 'Comfortaa'; color: var(--pink-primary); margin-bottom: 15px;">💸 Добави Транзакция</h3>
+      <form onsubmit="handleAddTx(event)">
+        <div class="input-group">
+          <label>Тип</label>
+          <select id="txType">
+            <option value="expense">Разход 🛍️</option>
+            <option value="income">Приход 💰</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Описание</label>
+          <input type="text" id="txTitle" placeholder="Заплата, Рокля..." required>
+        </div>
+        <div class="input-group">
+          <label>Сума (€)</label>
+          <input type="number" id="txAmount" step="0.01" required>
+        </div>
+        <button type="submit" class="btn">Добави</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+    let users = JSON.parse(localStorage.getItem('pink_finance_users')) || [];
+
+    function saveUsers() {
+      localStorage.setItem('pink_finance_users', JSON.stringify(users));
+    }
+
+    function toggleAuth(type) {
+      if (type === 'register') {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+      } else {
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('loginForm').classList.remove('hidden');
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const pass = document.getElementById('regPassword').value;
+
+      if (users.find(u => u.email === email)) {
+        alert('Този имейл вече е регистриран!');
+        return;
+      }
+
+      const newUser = {
+        id: Date.now(),
+        name,
+        email,
+        pass,
+        goals: [
+          { id: 1, title: 'Ваканция 🌴', target: 500, current: 120 },
+          { id: 2, title: 'Нов телефон 📱', target: 800, current: 350 }
+        ],
+        transactions: [
+          { id: 1, title: 'Заплата', amount: 1200, type: 'income', date: 'Днес' },
+          { id: 2, title: 'Козметика 💄', amount: 45, type: 'expense', date: 'Днес' }
+        ]
+      };
+
+      users.push(newUser);
+      saveUsers();
+      loginUser(newUser);
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPassword').value;
+
+      const user = users.find(u => u.email === email && u.pass === pass);
+      if (!user) {
+        alert('Грешен имейл или парола!');
+        return;
+      }
+      loginUser(user);
+    }
+
+    function loginUser(user) {
+      currentUser = user;
+      document.getElementById('authContainer').classList.add('hidden');
+      document.getElementById('appHeader').classList.remove('hidden');
+      document.getElementById('appDashboard').classList.remove('hidden');
+
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+
+      renderDashboard();
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      document.getElementById('authContainer').classList.remove('hidden');
+      document.getElementById('appHeader').classList.add('hidden');
+      document.getElementById('appDashboard').classList.add('hidden');
+    }
+
+    function renderDashboard() {
+      if (!currentUser) return;
+
+      let income = 0;
+      let expense = 0;
+
+      currentUser.transactions.forEach(t => {
+        if (t.type === 'income') income += Number(t.amount);
+        else expense += Number(t.amount);
+      });
+
+      const balance = income - expense;
+
+      document.getElementById('totalBalance').textContent = `${balance.toFixed(2)} €`;
+      document.getElementById('totalIncome').textContent = `+${income.toFixed(2)} €`;
+      document.getElementById('totalExpense').textContent = `-${expense.toFixed(2)} €`;
+
+      // Render Goals
+      const goalsHtml = currentUser.goals.map(g => {
+        const percent = Math.min(100, Math.round((g.current / g.target) * 100));
+        return `
+          <div class="goal-card">
+            <div class="goal-info">
+              <span>${g.title}</span>
+              <span style="color: var(--pink-primary);">${g.current.toFixed(2)} € / ${g.target.toFixed(2)} €</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: ${percent}%;"></div>
+            </div>
+            <div class="goal-details">
+              <span>Прогрес: ${percent}%</span>
+              <span>Остават: ${(g.target - g.current).toFixed(2)} €</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('goalsList').innerHTML = goalsHtml || '<p style="font-size:12px; color:var(--text-muted)">Нямате добавени цели.</p>';
+
+      // Render Transactions
+      const txHtml = currentUser.transactions.map(t => `
+        <div class="transaction-item">
+          <div class="tx-icon ${t.type}">
+            <i class="fas ${t.type === 'income' ? 'fa-plus' : 'fa-minus'}"></i>
+          </div>
+          <div class="tx-details">
+            <div class="tx-title">${t.title}</div>
+            <div class="tx-date">${t.date}</div>
+          </div>
+          <div class="tx-amount ${t.type}">
+            ${t.type === 'income' ? '+' : '-'}${Number(t.amount).toFixed(2)} €
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('txList').innerHTML = txHtml || '<p style="font-size:12px; color:var(--text-muted)">Няма транзакции.</p>';
+    }
+
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function handleAddGoal(e) {
+      e.preventDefault();
+      const title = document.getElementById('goalTitle').value;
+      const target = Number(document.getElementById('goalTarget').value);
+      const current = Number(document.getElementById('goalCurrent').value) || 0;
+
+      currentUser.goals.push({ id: Date.now(), title, target, current });
+      saveUsers();
+      renderDashboard();
+      closeModal('goalModal');
+      e.target.reset();
+    }
+
+    function handleAddTx(e) {
+      e.preventDefault();
+      const type = document.getElementById('txType').value;
+      const title = document.getElementById('txTitle').value;
+      const amount = Number(document.getElementById('txAmount').value);
+
+      const d = new Date();
+      const dateStr = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
+
+      currentUser.transactions.unshift({ id: Date.now(), title, amount, type, date: dateStr });
+      saveUsers();
+      renderDashboard();
+      closeModal('txModal');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
